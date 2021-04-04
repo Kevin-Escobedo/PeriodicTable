@@ -53,15 +53,14 @@ int Database::callback(void* NotUsed, int argc, char** argv, char** azColName)
 	//int* c = (int*)NotUsed;
 	//*c = atoi(argv[0]);
 
-	std::string row = "";
+	std::string* row = new std::string[argc];
+
 	for(int i = 0; i < argc; i++)
 	{
-		row += argv[i];
-		row += ",";
+		row[i] += argv[i];
 	}
 
 	results.push_back(row);
-
 	bool debug = false;
 
 	if(debug)
@@ -108,7 +107,8 @@ int Database::length(const char* tableName)
 
 	else
 	{
-		int count = atoi(results[0].c_str());
+		int count = atoi(results[0][0].c_str());
+		clearMemory();
 		return count;
 	}
 }
@@ -127,4 +127,13 @@ const char* Database::currentTime()
 	char* buf = new char[64];
 	sprintf(buf, "%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second);
 	return buf;
+}
+
+void Database::clearMemory()
+{
+	int limit = results.size();
+	for(int i = 0; i < limit; i++)
+	{
+		delete[] results[i];
+	}
 }

@@ -14,7 +14,7 @@ protected:
 	char* zErrMsg = nullptr;
 	int rc;
 	bool isOpen = false;
-	inline static std::vector<std::string> results;
+	inline static std::vector<std::string*> results;
 public:
 	Database(const char* databaseName);
 	Database(const Database& d);
@@ -25,6 +25,7 @@ public:
 protected:
 	static int callback(void* NotUsed, int argc, char** argv, char** azColName);
 	const char* currentTime();
+	void clearMemory();
 };
 
 #endif /* DATABASE_H */
