@@ -50,13 +50,24 @@ void Database::close()
 
 int Database::callback(void* NotUsed, int argc, char** argv, char** azColName)
 {
-	int* c = (int*)NotUsed;
-	*c = atoi(argv[0]);
+	//int* c = (int*)NotUsed;
+	//*c = atoi(argv[0]);
+
+	std::string row = "";
+	for(int i = 0; i < argc; i++)
+	{
+		row += argv[i];
+		row += ",";
+	}
+
+	results.push_back(row);
 
 	bool debug = false;
 
 	if(debug)
 	{
+		std::cout<<NotUsed<<std::endl;
+
 		for(int i = 0; i < argc; i++)
 		{
 			printf("%s = %s\n", azColName[i], argv[1] ? argv[i] : "NULL");
@@ -70,17 +81,17 @@ int Database::callback(void* NotUsed, int argc, char** argv, char** azColName)
 
 int Database::length(const char* tableName)
 {
-	int count = 0;
-	char command[50];
+	results.clear();
+	char command[64];
 	sprintf(command, "SELECT COUNT(*) FROM %s", tableName);
 	std::string tempCommand(command);
 	const char* sqlCommand = tempCommand.c_str();
 
-	rc = sqlite3_exec(db, sqlCommand, callback, &count, &zErrMsg);
+	rc = sqlite3_exec(db, sqlCommand, callback, nullptr, &zErrMsg);
 
 	if(rc != SQLITE_OK)
 	{
-		char errMessage[50];
+		char errMessage[32];
 		sprintf(errMessage, "no such table: %s", tableName);
 		bool noTable = strcmp(zErrMsg, errMessage) == 0;
 
@@ -97,6 +108,7 @@ int Database::length(const char* tableName)
 
 	else
 	{
+		int count = atoi(results[0].c_str());
 		return count;
 	}
 }

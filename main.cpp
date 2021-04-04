@@ -18,5 +18,11 @@ int main(int argc, char** argv)
         }
     }
 
+    else
+    {
+        int result = pd.length("PERIODIC");
+        std::cout<<result<<std::endl;
+    }
+
     return 0;
 }

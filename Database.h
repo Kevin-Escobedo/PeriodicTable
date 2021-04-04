@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sqlite3.h>
 #include <ctime>
+#include <vector>
 
 class Database
 {
@@ -13,15 +14,16 @@ protected:
 	char* zErrMsg = nullptr;
 	int rc;
 	bool isOpen = false;
+	inline static std::vector<std::string> results;
 public:
 	Database(const char* databaseName);
 	Database(const Database& d);
 	~Database();
 	Database& operator =(const Database& d);
+	int length(const char* tableName);
 	void close();
 protected:
 	static int callback(void* NotUsed, int argc, char** argv, char** azColName);
-	int length(const char* tableName);
 	const char* currentTime();
 };
 
