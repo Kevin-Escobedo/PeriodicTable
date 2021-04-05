@@ -18,10 +18,30 @@ int main(int argc, char** argv)
         }
     }
 
+    else if(argc == 3)
+    {
+        if(strcmp(argv[1], "-s") == 0)
+        {
+            int atomicNum = atoi(argv[2]);
+            std::string* element = pd.getElement("PERIODIC", atomicNum);
+            for(int i = 0; element[i] != "\0"; i++)
+            {
+                std::cout<<element[i]<<std::endl;
+            }
+
+            delete[] element;
+        }
+    }
+
     else
     {
-        int result = pd.length("PERIODIC");
-        std::cout<<result<<std::endl;
+        std::string* element = pd.getElement("PERIODIC", 1);
+        for(int i = 0; element[i] != "\0"; i++)
+        {
+            std::cout<<element[i]<<std::endl;
+        }
+
+        delete[] element;
     }
 
     return 0;

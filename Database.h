@@ -21,11 +21,11 @@ public:
 	~Database();
 	Database& operator =(const Database& d);
 	int length(const char* tableName);
+	void clearMemory();
 	void close();
 protected:
 	static int callback(void* NotUsed, int argc, char** argv, char** azColName);
 	const char* currentTime();
-	void clearMemory();
 };
 
 #endif /* DATABASE_H */
