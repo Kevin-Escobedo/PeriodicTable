@@ -53,12 +53,16 @@ int Database::callback(void* NotUsed, int argc, char** argv, char** azColName)
 	//int* c = (int*)NotUsed;
 	//*c = atoi(argv[0]);
 
-	std::string* row = new std::string[argc];
+	std::string* row = new std::string[argc + 1];
 
-	for(int i = 0; i < argc; i++)
+	int i = 0;
+
+	for(i = 0; i < argc; i++)
 	{
 		row[i] += argv[i];
 	}
+
+	row[i] = "\0";
 
 	results.push_back(row);
 	bool debug = false;
