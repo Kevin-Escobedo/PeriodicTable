@@ -7,6 +7,6 @@ This does require that sqlite3 be installed, which you can do with:
 `sudo apt-get install sqlite3 libsqlite3-dev`
 
 ## To-Do
-- [ ] Implement queries
+- [X] Implement queries
 - [ ] Add functions to abstract queries
 - [ ] Optimize/Refactor
